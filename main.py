@@ -21,6 +21,10 @@ def main() -> None:
     # to write an over-long line rather than submit an invalid entry.
     if not 1 <= len(LINE) <= 200 or not LINE.strip():
         raise ValueError(f"line is {len(LINE)} characters; gate allows 1-200")
+    # The entry is one pickup line: refuse to write it if it ever
+    # spans more than one line.
+    if "\n" in LINE or "\r" in LINE:
+        raise ValueError("line must be a single line")
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_PATH.write_text(LINE + "\n", encoding="utf-8")
 
